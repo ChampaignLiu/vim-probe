@@ -35,6 +35,7 @@ Plugin 'Lokaltog/vim-easymotion'
 call vundle#end()
 " 加载vim自带的和插件相应的语法和文件类型相关脚本
 filetype plugin indent on
+
 " 开启文件类型侦测
 filetype on
 " 根据侦测到的不同类型加载对应的插件
@@ -47,17 +48,19 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 let mapleader=";"
 " 开启行号显示
 set number
+" 设置鼠标模式
+set mouse=n
 " 开启实时搜索功能
 set incsearch
 " 搜索时大小写不敏感
 set ignorecase
-" 关闭兼容模式
+" 关闭兼容vi模式
 set nocompatible
 " 开启语法高亮功能
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
 syntax on
-" 高亮STL类型
+" 高亮STL类型，插件vim-cpp-enhanced-highlight功能
 syntax keyword cppSTLtype initializer_list
 " vim自身命令行模式智能补全
 set wildmenu
@@ -99,8 +102,9 @@ set nofoldenable
 " set guioptions-=m
 " set guioptions-=T
 " ===========gvim=============
+
 " 配色方案
-" set background=dark
+set background=dark
 " colorscheme solarized
 " colorscheme molokai
 colorscheme phd
