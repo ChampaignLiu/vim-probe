@@ -9,6 +9,40 @@
 * http://vimdoc.sourceforge.net/htmldoc/help.html
 * http://learnvimscriptthehardway.stevelosh.com/
 * https://vim-adventures.com/
+* http://vimcdoc.sourceforge.net/doc/help.html
+
+```vim
+:set fdm=marker
+zf`行号`G	从光标所在行折叠到目标行，文件内会被添加三个连续花括号的注释，作为标记
+zF	在当前行创建折叠
+:5,9fo	折叠5-9行的代码
+zd	删除光标下折叠
+zD	删除光标下折叠，以及嵌套的折叠
+zE	删除窗口内的所有折叠，manual和marker模式
+zo	打开光标下折叠
+zO	打开光标下折叠，以及嵌套的折叠
+zc	关闭光标下折叠
+zC	关闭光标下折叠，以及嵌套的折叠
+za	
+zA	
+zv	
+zR	打开所有折叠
+zM	关闭所有折叠
+zr
+zm
+zE	删除所有折叠标签
+[z	移动到折叠开始处
+]z	
+zj	移动到下一个折叠开始
+zk	移动到前一个折叠结束
+zi
+:set fdm=manual	设置为手动模式
+:mkview	保存手动模式下折叠信息
+:loadview 加载折叠信息，存储在.vim/view文件夹下
+:set foldcolumn=4
+:set foldcolumn&
+```
+
 ### 常用功能的脚本设置
 ```
 " 开启文件类型侦测
@@ -138,6 +172,7 @@ cmake --build . --target ycm_core
 * https://github.com/yangyangwithgnu/use_vim_as_ide
 * https://github.com/VundleVim/Vundle.vim
 * https://github.com/Valloric/YouCompleteMe
+* https://github.com/garbas/vim-snipmate
 * https://github.com/OmniSharp/omnisharp-vim
 * https://github.com/chromium/vim-codesearch
 * https://github.com/wklken/k-vim

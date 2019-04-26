@@ -64,15 +64,21 @@ syntax on
 syntax keyword cppSTLtype initializer_list
 " vim自身命令行模式智能补全
 set wildmenu
+" 列不超过80，除非单句话就超过80
+set textwidth=80
 " 高亮显示搜索结果
 set hlsearch
+" <EOL>: unix: <NL>
+set fileformat=unix
 " 标志当前行/列
 " set cursorline
 " set cursorcolumn
 " 显示光标当前位置
 " set ruler
 " 将制表符扩展为空格，已有文件没有扩展，手动retab
-set expandtab
+" set expandtab
+" 在屏幕的最后一行显示命令
+" set showcmd
 " 设置编辑时制表符占用空格数
 set tabstop=4
 " 设置格式化时制表符占用空格数
@@ -81,6 +87,8 @@ set shiftwidth=4
 set softtabstop=4
 " 显示状态栏
 set laststatus=2
+" 可解析的文件编码
+" set fileencodings=gb2312,gbk,gb18030,ucs-bom,utf-8,default,latin1
 " 设置状态栏主题风格
 " let g:Powerline_colorscheme='solarized256'
 " 禁止折行
@@ -88,6 +96,7 @@ set laststatus=2
 " 代码折叠，手动manual，缩进indent，语法syntax，未更改文本diff
 " set foldmethod=indent
 set foldmethod=syntax
+" set foldmethod=marker
 " 启动vim时关闭折叠代码
 set nofoldenable
 " ===========gvim=============
@@ -230,3 +239,18 @@ map <Leader>bl :MBEToggle<cr>
 " buffer 切换快捷键，不管用？
 " map <C-Tab> :MBEbn<cr>
 " map <C-S-Tab> :MBEbp<cr>
+map <F2> a<C-R>=strftime("%c")<CR><Esc>
+if has("cscope")
+    set csto=1
+    set cst
+    set nocsverb
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
+if has("gdb")
+	set asm=0
+	let g:vimgdb_debug_file=""
+	run macros/gdb_mappings.vim
+endif
