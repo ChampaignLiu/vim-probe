@@ -22,6 +22,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
+Plugin 'mattn/emmet-vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'derekwyatt/vim-protodef'
@@ -44,6 +45,11 @@ filetype on
 " filetype indent on
 " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" Restore the last quit position when open file.
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \     exe "normal g'\"" |
+    \ endif
 " 设置前缀键
 let mapleader=";"
 " 开启行号显示
@@ -64,6 +70,8 @@ syntax on
 syntax keyword cppSTLtype initializer_list
 " vim自身命令行模式智能补全
 set wildmenu
+" 设置退格键模式
+set backspace=indent,eol,start
 " 列不超过80，除非单句话就超过80
 set textwidth=80
 " 高亮显示搜索结果
@@ -99,6 +107,8 @@ set foldmethod=syntax
 " set foldmethod=marker
 " 启动vim时关闭折叠代码
 set nofoldenable
+" 设置光标移动时上下显示的最少行数
+set scrolloff=15
 " ===========gvim=============
 " 禁止光标闪烁
 " set gcr=a:block-blinkon0
@@ -138,7 +148,8 @@ let tagbar_width=32
 " let g:tagbar_compact=1
 " 设置显示隐藏子窗口的快捷键
 nnoremap <Leader>tl :TagbarToggle<CR>
-" 通过tagbar设置ctags对哪些标志符生成标签，生成tags时增加参数--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v
+" 通过tagbar设置ctags对哪些标志符生成标签，
+" 生成tags时增加参数--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v
 let g:tagbar_type_cpp = {
     \ 'kinds' : [
          \ 'c:classes:0:1',
@@ -240,6 +251,9 @@ map <Leader>bl :MBEToggle<cr>
 " map <C-Tab> :MBEbn<cr>
 " map <C-S-Tab> :MBEbp<cr>
 map <F2> a<C-R>=strftime("%c")<CR><Esc>
+" 关闭其它窗口
+nmap <leader>zz <C-w>o
+
 if has("cscope")
     set csto=1
     set cst
@@ -249,8 +263,51 @@ if has("cscope")
     endif
     set csverb
 endif
+
 if has("gdb")
 	set asm=0
 	let g:vimgdb_debug_file=""
 	run macros/gdb_mappings.vim
 endif
+
+function! RunShell(Msg, Shell)
+	echo a:Msg . '...'
+	call system(a:Shell)
+	echon 'done'
+endfunction
+nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
+nmap <F11> :call RunShell("Generate filename tags", "~/.vim/shell/genfiletags.sh")<cr>
+nmap <F12> :call RunShell("Generate cscope", "cscope -Rb")<cr>:cs add cscope.out<cr>
+
+" set   cindent
+" set   cinoptions=:0
+" set   hidden
+" set   pumheight=10
+" set   smartindent
+" set   termencoding=utf-8"}}}
+" set   whichwrap=h,l
+" set   wildignore=*.bak,*.o,*.e,*~
+" set   wildmode=list:longest,full
+" " Switching between buffers.
+" nnoremap <C-h> <C-W>h
+" nnoremap <C-j> <C-W>j"}}}
+" nnoremap <C-k> <C-W>k
+" nnoremap <C-l> <C-W>l
+" inoremap <C-h> <Esc><C-W>h
+" inoremap <C-j> <Esc><C-W>j
+" inoremap <C-k> <Esc><C-W>k
+" inoremap <C-l> <Esc><C-W>l
+" " taglist.vim
+" " cscope.vim
+" " snipMate
+" " plugin shortcuts
+" nmap <leader>sa :cs add cscope.out<cr>
+" nmap <leader>ss :cs find s <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>sg :cs find g <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>sc :cs find c <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>st :cs find t <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>se :cs find e <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<cr><cr>
+" nmap <leader>si :cs find i <C-R>=expand("<cfile>")<cr><cr>
+" nmap <leader>sd :cs find d <C-R>=expand("<cword>")<cr><cr>
+" nmap <leader>gs :GetScripts<cr>
