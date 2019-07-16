@@ -5,6 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " vundle管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+" Plugin 'fatih/vim-go'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
 Plugin 'vim-scripts/phd'
@@ -15,7 +16,7 @@ Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kshenoy/vim-signature'
 Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/indexer.tar.gz' " 自动生成tags标签并引入
+" Plugin 'vim-scripts/indexer.tar.gz' 有问题" 自动生成tags标签并引入
 Plugin 'vim-scripts/DfrankUtil'
 Plugin 'vim-scripts/vimprj'
 Plugin 'dyng/ctrlsf.vim'
@@ -24,7 +25,10 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'mattn/emmet-vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'derekwyatt/vim-protodef'
 Plugin 'scrooloose/nerdtree'
 Plugin 'fholgado/minibufexpl.vim'
@@ -126,7 +130,7 @@ set scrolloff=15
 set background=dark
 " colorscheme solarized
 " colorscheme molokai
-colorscheme phd
+" colorscheme phd
 " 可视化缩进随vim启动，需要配色方案提供风格
 let g:indent_guides_enable_on_vim_startup = 0
 " 从第二层开始可视化显示缩进
@@ -193,7 +197,7 @@ let g:indexer_ctagsCommandLineOptions="--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v 
 " 设定补全模板所在目录
 let g:UltiSnippetDirectories="home/champaign/.vim/bundle/ultisnips/cham/cpp.snippets"
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
+" let g:UltiSnipsExpandTrigger="<leader><tab>"
 " let g:UltiSnipsJumpForwardTrigger="<leader><c-tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " 跳转到声明或定义
@@ -201,15 +205,15 @@ nnoremap <Leader>tc :YouCompleter GoToDeclaration<CR>
 nnoremap <Leader>td :YouCompleter GoToDefinition<CR>
 " YCM 补全菜单配色
 " 菜单
-highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
 " 选中项
-highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
 " 补全功能在注释中同样有效
 let g:ycm_complete_in_comments=1
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
 let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
-let g:ycm_collect_identifiers_from_tags_files=1
+" let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
 " set tags+=/data/misc/software/misc./vim/stdcpp.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
@@ -223,7 +227,11 @@ let g:ycm_cache_omnifunc=0
 " 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax=1
 " 设置python解释器
-let g:ycm_server_python_interpreter='/usr/bin/python'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_use_clangd = 0
+" Use deoplete.
+let g:deoplete#enable_at_startup=1
 " protodef插件功能：根据类声明自动生成类实现的代码框架
 " 设置 pullproto.pl 脚本路径
 let g:protodefprotogetter='~/.vim/bundle/vim-protodef/pullproto.pl'

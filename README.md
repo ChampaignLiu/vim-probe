@@ -166,12 +166,21 @@ let g:UltiSnipsExpandTrigger="<leader><tab>"
 cmake -G "Unix Makefiles" -DUSE_SYSTEM_BOOST=ON -DPATH_TO_LLVM_ROOT=/opt/clang+llvm/path/ . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
 cmake --build . --target ycm_core
 ```
+```
+sudo dnf install cmake gcc-c++ make python3-devel
+cd ~/.vim/bundle/YouCompleteMe
+git submodule update --init --recursive
+python3 install.py --clang-completer
+python3 install.py --clangd-completer
+python3 install.py --go-completer
+python3 install.py --ts-completer
+```
 * 每个工程目录都可以配置一个.ycm_extra_conf.py文件，配置各类参数。参考该插件目录里的样例。
 
 ## 参考来源
 * https://github.com/yangyangwithgnu/use_vim_as_ide
 * https://github.com/VundleVim/Vundle.vim
-* https://github.com/Valloric/YouCompleteMe
+* https://github.com/ycm-core/YouCompleteMe
 * https://github.com/garbas/vim-snipmate
 * https://github.com/OmniSharp/omnisharp-vim
 * https://github.com/chromium/vim-codesearch
